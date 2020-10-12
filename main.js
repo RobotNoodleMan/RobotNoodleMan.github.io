@@ -293,6 +293,8 @@ class Controller
     console.log(gameMap.join("\n"));
     console.log(gameState.nmines);
     let textnode = document.createTextNode(gameState.nmines-gameState.nmarked);
+    if(gameState.nmines<gameState.nmarked)
+        textnode = document.createTextNode(0);
     document.getElementById("mines").innerHTML = "Mines:"
     document.getElementById("mines").appendChild(textnode);
     if(gameState.done)
