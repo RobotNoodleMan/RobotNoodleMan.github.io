@@ -205,6 +205,8 @@ class Controller
         this.game.init(n,m,mine);
         let cellColor = null;
         this.setButtons();
+        var textnode = document.createTextNode(mine);
+        document.getElementById("mines").appendChild(textnode);
         for( let i = 0 ; i < this.mrows ; i ++) 
         {
             let row = grid.insertRow(i);
@@ -248,6 +250,7 @@ class Controller
         this.mrows = n;
         this.mcols = m;
         this.mines = mine;
+        document.getElementById("mines").innerHTML = "Mines:";
         document.getElementById('grid').remove();
         var x = document.createElement("TABLE");
         x.setAttribute("id", "grid");
@@ -288,6 +291,10 @@ class Controller
     let gameMap = [];
     gameMap = this.game.getRendering();
     console.log(gameMap.join("\n"));
+    console.log(gameState.nmines);
+    let textnode = document.createTextNode(gameState.nmines-gameState.nmarked);
+    document.getElementById("mines").innerHTML = "Mines:"
+    document.getElementById("mines").appendChild(textnode);
     if(gameState.done)
     {
            if(gameState.exploded)
@@ -325,7 +332,7 @@ class Controller
                     else if(gameMap[i][j] === "0")
                     {
                         document.getElementById('grid').rows[i].cells[j].style.backgroundColor = "#85998a";
-                       // document.getElementById('grid').rows[i].cells[j].innerHTML = gameMap[i][j];
+                       // document.getElementById('grid').rows[i].cell s[j].innerHTML = gameMap[i][j];
                     }
                     else if (gameMap[i][j] !== "H" && gameMap[i][j]!== "M")
                     {

@@ -13,6 +13,7 @@
 
 .center{
   text-align:center;
+  font-size: 20px;
 }
 
 #button1{
@@ -55,6 +56,12 @@
   cursor: pointer;
   left:50%;
   text-align:center;
+}
+#mines{
+  font-size: 20px;
+  text-align:center;
+  color:black
+
 }
 
 
