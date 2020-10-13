@@ -191,12 +191,17 @@ class Controller
     constructor(game) 
     {
         this.game = game;
-        this.grid = document.getElementById("grid");
+       // this.grid = document.getElementById("grid");
+        this.startGrid = document.getElementById("grid");
     }
     
     prepare_dom(n,m,mine) 
     {
+        this.grid = this.startGrid;
+        this.interval = null;
+        this.startTimer = 0;
         this.mcell = null;
+        this.time = 0;
         this.timer = null;
         this.grid.innerHTML = ""
         this.mrows = n;
@@ -209,7 +214,7 @@ class Controller
         document.getElementById("mines").appendChild(textnode);
         for( let i = 0 ; i < this.mrows ; i ++) 
         {
-            let row = grid.insertRow(i);
+            let row = this.grid.insertRow(i);
             for(let j = 0; j<this.mcols; j++)
             {
                 let cell = row.insertCell(j);
@@ -236,6 +241,7 @@ class Controller
                 //mouse/desktop right click
                 cell.addEventListener("contextmenu", function(event){
                       self.cellMarked(cell)
+                      window.event.returnValue = false;
                 });
                 //mobile long tap
                 cell.addEventListener("touchstart",function(){self.touchstart(cell)},false);
@@ -247,14 +253,15 @@ class Controller
     }
     reset_dom(n,m,mine)
     {
+        clearInterval(this.interval);
+        document.getElementById("time").innerHTML= "Timer:";
         this.mrows = n;
         this.mcols = m;
         this.mines = mine;
         document.getElementById("mines").innerHTML = "Mines:";
-        document.getElementById('grid').remove();
-        var x = document.createElement("TABLE");
-        x.setAttribute("id", "grid");
-        document.body.appendChild(x);
+        // var x = document.createElement("TABLE");
+        // x.setAttribute("id", "grid");
+        // document.body.appendChild(x);
 
     }
 
@@ -286,6 +293,15 @@ class Controller
 
     gridUpdate()
    {
+     let time = 0;
+     if(this.startTimer ===0)
+     {
+       this.startTimer = 1;
+      this.interval = setInterval( function(){
+        time++;
+        document.getElementById("time").innerHTML= "Timer: " + time;
+    }, 1000);
+     }
     let condition = null;
     let gameState = this.game.getStatus();  
     let gameMap = [];
